@@ -123,7 +123,7 @@ end)
 end
 end)
 
-local u=h:CreateWindow"Squares' Hitbox Extender"
+local u=h:CreateWindow"EVIL GANG STAYS LURKIN"
 local v=u:AddTab"Main"
 local w=v:AddLeftGroupbox"Hitbox Extender"
 local x=v:AddLeftGroupbox"ESP"
