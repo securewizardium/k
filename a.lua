@@ -778,15 +778,16 @@ local gui1 = plr1.PlayerGui
 local topbarFrame1 = gui1.TopbarStandard.Holders.Left
 
 
-
-plr1.CharacterAdded:Connect(function()
-    task.wait(1)
-    if #topbarFrame1:GetChildren() > 3 then
-        for _,v in pairs(topbarFrame1:GetChildren()) do
-            if v:IsA("Frame") and v.Name == "Widget" and v.AbsolutePosition ~= Vector2.new(176, -46) and v.AbsolutePosition ~= Vector2.new(232, -46) then
-                v:Destroy()
-                break
+if game.PlaceId == 8502861227 then
+    plr1.CharacterAdded:Connect(function()
+        task.wait(1)
+        if #topbarFrame1:GetChildren() > 3 then
+            for _,v in pairs(topbarFrame1:GetChildren()) do
+                if v:IsA("Frame") and v.Name == "Widget" and v.AbsolutePosition ~= Vector2.new(176, -46) and v.AbsolutePosition ~= Vector2.new(232, -46) then
+                    v:Destroy()
+                    break
+                end
             end
         end
-    end
-end)
+    end)
+end
