@@ -773,12 +773,11 @@ Duration=2
 })
 
 
-local plr1 = game.Players.LocalPlayer
-local gui1 = plr1.PlayerGui
-local topbarFrame1 = gui1.TopbarStandard.Holders.Left
-
 
 if game.PlaceId == 8502861227 then
+    local plr1 = game.Players.LocalPlayer
+    local gui1 = plr1.PlayerGui
+    local topbarFrame1 = gui1.TopbarStandard.Holders.Left
     plr1.CharacterAdded:Connect(function()
         task.wait(1)
         if #topbarFrame1:GetChildren() > 3 then
