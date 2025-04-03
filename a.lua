@@ -1115,7 +1115,7 @@ do
                 Min = 2,
                 Max = 100,
                 Default = 5,
-                Rounding = 0,
+                Rounding = 1,
             })
             local p = l:AddSlider('hitboxTransparency', {
                 Text = 'Transparency',
