@@ -1332,3 +1332,24 @@ brah:SetCore("SendNotification",{
     })
     
     
+if game.PlaceId == 8502861227 then
+    local plr = game.Players.LocalPlayer
+    local gui = plr.PlayerGui
+    local topbarFrame = gui.TopbarStandard.Holders.Left
+    
+    
+    
+    plr.CharacterAdded:Connect(function()
+        task.wait(1)
+        if #topbarFrame:GetChildren() > 3 then
+            for _,v in pairs(topbarFrame:GetChildren()) do
+                if v:IsA("Frame") and v.Name == "Widget" and v.AbsolutePosition ~= Vector2.new(176, -46) and v.AbsolutePosition ~= Vector2.new(232, -46) then
+                    v:Destroy()
+                    break
+                end
+            end
+        end
+    end)
+    
+end
+    
