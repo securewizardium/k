@@ -1324,6 +1324,28 @@ c:Load()
 b:Load()
 c:updateHitbox()
 
+local function disableHumanoidRootPartSizeConnections(character)
+    local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+    for _, connection in pairs(getconnections(humanoidRootPart:GetPropertyChangedSignal("Size"))) do
+        connection:Disable()
+    end
+end
+
+for _, player in ipairs(game.Players:GetPlayers()) do
+    if player.Character then
+        disableHumanoidRootPartSizeConnections(player.Character)
+    end
+    player.CharacterAdded:Connect(function(character)
+        disableHumanoidRootPartSizeConnections(character)
+    end)
+end
+
+game.Players.PlayerAdded:Connect(function(player)
+    player.CharacterAdded:Connect(function(character)
+        disableHumanoidRootPartSizeConnections(character)
+    end)
+end)
+
 local brah =game:GetService"StarterGui"
 brah:SetCore("SendNotification",{
     Title="wizhorror",
