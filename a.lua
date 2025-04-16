@@ -1351,9 +1351,24 @@ brah:SetCore("SendNotification",{
     Title="wizhorror",
     Text="get fucked shitter",
     Duration=2
-    })
+})
     
-    
+if game.PlaceId == 120490664183274 then
+    local mt = getrawmetatable(game)
+    local oldNamecall = mt.__namecall
+    setreadonly(mt, false)
+
+    mt.__namecall = newcclosure(function(self, ...)
+    local method = getnamecallmethod()
+        if method == "FireServer" and self.Name == "SyncSound" then
+            return
+        end
+    return oldNamecall(self, ...)
+end)
+
+setreadonly(mt, true)
+end 
+
 if game.PlaceId == 8502861227 then
     local plr = game.Players.LocalPlayer
     local gui = plr.PlayerGui
