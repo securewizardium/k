@@ -55,12 +55,7 @@ local Old; Old = hookfunction(getrenv().debug.info, newcclosure(function(...)
 end))
 -- setthreadidentity(9)
 setthreadidentity(7)
---[[
-    Universal Hitbox Extender
-    Please do not redistribute this code on any third-party websites
-    Github: https://github.com/RectangularObject/UniversalHBE
-    Discord: https://discord.gg/9zYPyFX4CJ
-]]
+
 local a
 
 a = {
