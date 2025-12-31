@@ -1163,7 +1163,7 @@ do
                 Text = 'Force Update Keybind',
             })
             z:AddLabel'Toggle UI':AddKeyPicker('menuKeybind', {
-                Default = 'Insert',
+                Default = 'Zero',
                 NoUI = true,
                 Text = 'Menu Keybind',
             })
