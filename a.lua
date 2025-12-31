@@ -1328,7 +1328,7 @@ brah:SetCore("SendNotification",{
     Duration=2
 })
     
-if game.PlaceId == 120490664183274 or game.PlaceId == 8502861227 or game.PlaceId == 99525572398262 or game.PlacedId == 101696838272183 then
+if game.PlaceId == 120490664183274 or game.PlaceId == 8502861227 or game.PlaceId == 99525572398262 or game.PlaceId == 101696838272183 then
     local mt = getrawmetatable(game)
     local oldNamecall = mt.__namecall
     setreadonly(mt, false)
