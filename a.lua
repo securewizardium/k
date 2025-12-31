@@ -1300,7 +1300,7 @@ b:Load()
 c:updateHitbox()
 
 local function disableHumanoidRootPartSizeConnections(character)
-    local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+    local humanoidRootPart = character:WaitForChild("HumanoidRootPart", 5)
     for _, connection in pairs(getconnections(humanoidRootPart:GetPropertyChangedSignal("Size"))) do
         connection:Disable()
     end
